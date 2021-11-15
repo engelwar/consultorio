@@ -2,47 +2,47 @@
 include('../config.php');
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
-$correo 	 = $_REQUEST['correo'];
-$direccion      = $_REQUEST['direccion'];
-$enfermedad_base 	 = $_REQUEST['enfermedad_base'];
-$nacionalidad 	 = $_REQUEST['nacionalidad'];
-$telefono      = $_REQUEST['telefono'];
-$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
-$num_referencia 	 = $_REQUEST['num_referencia'];
-$personal_referencia      = $_REQUEST['personal_referencia'];
-$profesion 	 = $_REQUEST['profesion'];
-$tipo_sangre 	 = $_REQUEST['tipo_sangre'];
 $ci      = $_REQUEST['ci'];
+$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
+$direccion      = $_REQUEST['direccion'];
+$correo 	 = $_REQUEST['correo'];
+$num_referencia 	 = $_REQUEST['num_referencia'];
+$tipo_sangre 	 = $_REQUEST['tipo_sangre'];
+$seguro_medico 	 = $_REQUEST['seguro_medico'];
+$profesion 	 = $_REQUEST['profesion'];
+$nacionalidad 	 = $_REQUEST['nacionalidad'];
+$enfermedad_base      = $_REQUEST['enfermedad_base'];
+$personal_referencia      = $_REQUEST['personal_referencia'];
 
 $QueryInsert = ("INSERT INTO paciente(
-    nombres,
-    apellidos,
-    correo,
-    direccion,
-    enfermedad_base,
-    nacionalidad,
-    telefono,
-    fecha_nacimiento,
-    num_referencia,
-    personal_referencia,
-    profesion,
-    tipo_sangre,
-    ci
+    NOMBRE,
+    APELLIDO,
+    CI,
+    FECHA_NACIMIENTO,
+    DIRECCION,
+    CORREO,
+    NUMERO_REFERENCIA,
+    TIPO_SANGRE,
+    SEGURO_MEDICO,
+    PROFESION,
+    NACIONALIDAD,
+    ENFERMEDAD_BASE,
+    PERSONA_REFERENCIA
 )
 VALUES (
     '".$nombres. "',
     '".$apellidos. "',
-    '".$correo."',
-    '".$direccion. "',
-    '".$enfermedad_base. "',
-    '".$nacionalidad."',
-    '".$telefono. "',
+    '".$ci."',
     '".$fecha_nacimiento. "',
-    '".$num_referencia."',
-    '".$personal_referencia. "',
+    '".$direccion. "',
+    '".$correo."',
+    '".$num_referencia. "',
+    '".$tipo_sangre. "',
+    '".$seguro_medico."',
     '".$profesion. "',
-    '".$tipo_sangre."',
-    '".$ci. "'
+    '".$nacionalidad. "',
+    '".$enfermedad_base."',
+    '".$personal_referencia. "'
 )");
 $inserInmueble = mysqli_query($con, $QueryInsert);
 

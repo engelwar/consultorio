@@ -4,7 +4,7 @@
 
 session_start();
 
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['CODIGO'])) {
   header('Location: ../login_paciente.php');
 }
 
@@ -28,7 +28,7 @@ $nombres = $_SESSION['nombres'];
   <?php
   include('../config.php');
 
-  $sqlCliente   = ("SELECT * FROM paciente ORDER BY id DESC ");
+  $sqlCliente   = ("SELECT * FROM paciente ORDER BY CODIGO DESC ");
   $queryCliente = mysqli_query($con, $sqlCliente);
   $cantidad     = mysqli_num_rows($queryCliente);
   ?>
@@ -61,43 +61,43 @@ $nombres = $_SESSION['nombres'];
                       <tr>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellidos</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Enfermedad de base</th>
-                        <th scope="col">Nacionalidad</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Fecha nacimiento</th>
-                        <th scope="col">Numero de referencia</th>
-                        <th scope="col">Personal de referencia</th>
-                        <th scope="col">Profesion</th>
-                        <th scope="col">Tipo de sangre</th>
                         <th scope="col">CI</th>
+                        <th scope="col">Fecha de Nacimiento</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Nº de Referencia</th>
+                        <th scope="col">Tipo de Sangre</th>
+                        <th scope="col">Seguro Medico</th>
+                        <th scope="col">Profesion</th>
+                        <th scope="col">Nacionalidad</th>
+                        <th scope="col">Enfermedad de Base</th>
+                        <th scope="col">Persona de Referencia</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       while ($dataCliente = mysqli_fetch_array($queryCliente)) { ?>
                         <tr>
-                          <td><?php echo $dataCliente['nombres']; ?></td>
-                          <td><?php echo $dataCliente['apellidos']; ?></td>
-                          <td><?php echo $dataCliente['correo']; ?></td>
-                          <td><?php echo $dataCliente['direccion']; ?></td>
-                          <td><?php echo $dataCliente['enfermedad_base']; ?></td>
-                          <td><?php echo $dataCliente['nacionalidad']; ?></td>
-                          <td><?php echo $dataCliente['telefono']; ?></td>
-                          <td><?php echo $dataCliente['fecha_nacimiento']; ?></td>
-                          <td><?php echo $dataCliente['num_referencia']; ?></td>
-                          <td><?php echo $dataCliente['personal_referencia']; ?></td>
-                          <td><?php echo $dataCliente['profesion']; ?></td>
-                          <td><?php echo $dataCliente['tipo_sangre']; ?></td>
-                          <td><?php echo $dataCliente['ci']; ?></td>
+                          <td><?php echo $dataCliente['NOMBRE']; ?></td>
+                          <td><?php echo $dataCliente['APELLIDO']; ?></td>
+                          <td><?php echo $dataCliente['CI']; ?></td>
+                          <td><?php echo $dataCliente['FECHA_NACIMIENTO']; ?></td>
+                          <td><?php echo $dataCliente['DIRECCION']; ?></td>
+                          <td><?php echo $dataCliente['CORREO']; ?></td>
+                          <td><?php echo $dataCliente['NUMERO_REFERENCIA']; ?></td>
+                          <td><?php echo $dataCliente['TIPO_SANGRE']; ?></td>
+                          <td><?php echo $dataCliente['SEGURO_MEDICO']; ?></td>
+                          <td><?php echo $dataCliente['PROFESION']; ?></td>
+                          <td><?php echo $dataCliente['NACIONALIDAD']; ?></td>
+                          <td><?php echo $dataCliente['ENFERMEDAD_BASE']; ?></td>
+                          <td><?php echo $dataCliente['PERSONA_REFERENCIA']; ?></td>
 
                           <td>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataCliente['id']; ?>">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataCliente['CODIGO']; ?>">
                               Eliminar
                             </button>
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataCliente['id']; ?>">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataCliente['CODIGO']; ?>">
                               Modificar
                             </button>
                           </td>

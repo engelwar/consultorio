@@ -1,38 +1,38 @@
 
 <?php
 include('../config.php');
-$idRegistros = $_REQUEST['id'];
+$idRegistros = $_REQUEST['CODIGO'];
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
-$correo 	 = $_REQUEST['correo'];
-$direccion      = $_REQUEST['direccion'];
-$enfermedad_base 	 = $_REQUEST['enfermedad_base'];
-$nacionalidad 	 = $_REQUEST['nacionalidad'];
-$telefono      = $_REQUEST['telefono'];
-$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
-$num_referencia 	 = $_REQUEST['num_referencia'];
-$personal_referencia      = $_REQUEST['personal_referencia'];
-$profesion 	 = $_REQUEST['profesion'];
-$tipo_sangre 	 = $_REQUEST['tipo_sangre'];
 $ci      = $_REQUEST['ci'];
+$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
+$direccion      = $_REQUEST['direccion'];
+$correo 	 = $_REQUEST['correo'];
+$num_referencia 	 = $_REQUEST['num_referencia'];
+$tipo_sangre 	 = $_REQUEST['tipo_sangre'];
+$seguro_medico 	 = $_REQUEST['seguro_medico'];
+$profesion 	 = $_REQUEST['profesion'];
+$nacionalidad 	 = $_REQUEST['nacionalidad'];
+$enfermedad_base      = $_REQUEST['enfermedad_base'];
+$personal_referencia      = $_REQUEST['personal_referencia'];
 
 $update = ("UPDATE paciente 
 	SET 
-	nombres  ='" .$nombres. "',
-	apellidos  ='" .$apellidos. "',
-	correo ='" .$correo. "', 
-	direccion  ='" .$direccion. "',
-	enfermedad_base  ='" .$enfermedad_base. "',
-	nacionalidad ='" .$nacionalidad. "', 
-	telefono  ='" .$telefono. "',
-	fecha_nacimiento  ='" .$fecha_nacimiento. "',
-	num_referencia ='" .$num_referencia. "', 
-	personal_referencia  ='" .$personal_referencia. "',
-	profesion  ='" .$profesion. "',
-	tipo_sangre ='" .$tipo_sangre. "', 
-	ci  ='" .$ci. "' 
+	NOMBRE  ='" .$nombres. "',
+	APELLIDO  ='" .$apellidos. "',
+	CI ='" .$ci. "', 
+	FECHA_NACIMIENTO  ='" .$fecha_nacimiento. "',
+	DIRECCION ='" .$direccion. "', 
+	CORREO  ='" .$correo. "',
+	NUMERO_REFERENCIA  ='" .$num_referencia. "',
+	TIPO_SANGRE ='" .$tipo_sangre. "', 
+	SEGURO_MEDICO  ='" .$seguro_medico. "',
+	PROFESION  ='" .$profesion. "',
+	NACIONALIDAD ='" .$nacionalidad. "', 
+	ENFERMEDAD_BASE  ='" .$enfermedad_base. "', 
+	PERSONA_REFERENCIA  ='" .$personal_referencia. "'
 
-WHERE id='" .$idRegistros. "'
+WHERE CODIGO ='" .$idRegistros. "'
 ");
 $result_update = mysqli_query($con, $update);
 

@@ -7,20 +7,20 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $sql = ("SELECT id, nombres, correo, ci FROM paciente WHERE correo = '".$email."' ");
+        $sql = ("SELECT CODIGO , NOMBRE, CORREO, CI FROM paciente WHERE CORREO = '".$email."' ");
 
         $resultado = mysqli_query($con, $sql);
         $num = $resultado->num_rows;
 
         if ($num > 0){
             $row = $resultado->fetch_assoc();
-            $password_bd = $row['ci'];
+            $password_bd = $row['CI'];
 
             // $pass_c = sha1($password);
 
             if ($password_bd == $password){
-                $_SESSION['id'] = $row['id'];
-                $_SESSION['nombres'] = $row['nombres'];
+                $_SESSION['id'] = $row['CODIGO'];
+                $_SESSION['nombres'] = $row['NOMBRE'];
 
                 header('Location: index.php');
             }else{
