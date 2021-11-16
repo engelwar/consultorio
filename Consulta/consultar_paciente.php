@@ -5,7 +5,7 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-  header('Location: ../principal.php');
+  header('Location: ../login_paciente.php');
 }
 
 $nombres = $_SESSION['nombres'];
@@ -23,33 +23,10 @@ $nombres = $_SESSION['nombres'];
     <a class="navbar-brand ps-3" href="../logout.php">Cerrar Sesion</a>
   </div>
 </nav>
-<div class="p-5">
 
-  <?php
-  include('../config.php');
-
-  if (isset($_GET['ci']) && $_GET['ci'] != null) {
-    $ci = $_GET['ci'];
-
-    $sqlPersonal   = ("SELECT * FROM personal where CI = '" . $ci . "' ");
-    $queryPersonal = mysqli_query($con, $sqlPersonal);
-    $cantidad     = mysqli_num_rows($queryPersonal);
-  } else {
-    $sqlPersonal   = ("SELECT * FROM personal ORDER BY CODIGO DESC ");
-    $queryPersonal = mysqli_query($con, $sqlPersonal);
-    $cantidad     = mysqli_num_rows($queryPersonal);
-  }
-
-  ?>
-
-
-  <h4 class="text-center">
-    <a href="registrarPersonal.php" class="btn btn-primary mb-4">Registrar Personal</a>
-  </h4>
-  <hr>
-
+<div class="jumbotron">
   <div class="container w-50">
-    <form action="index.php" method="$_POST">
+    <form action="consultar_paciente.php" method="$_POST">
       <div class="mb-3 text-center">
         <label for="" class="form-label">Carnet de Identidad</label>
         <input type="number" class="form-control" id="ci" name="ci" placeholder="123">
@@ -59,12 +36,35 @@ $nombres = $_SESSION['nombres'];
       </div>
     </form>
   </div>
+  <div class="p-5">
 
-  <div class="mt-4">
+    <?php
+    include('../config.php');
 
-    <div class="row text-center" style="background-color: #cecece">
-      <div class="col-md-12">
-        <strong>Lista de Personal <span style="color: crimson"> ( <?php echo $cantidad; ?> )</span> </strong>
+    if (isset($_GET['ci'])) {
+      $ci = $_GET['ci'];
+
+      $sqlCliente   = ("SELECT * FROM paciente where CI = '" . $ci . "' ");
+      $queryCliente = mysqli_query($con, $sqlCliente);
+      $cantidad     = mysqli_num_rows($queryCliente);
+    } else {
+      $cantidad = 0;
+      $sqlCliente   = ("SELECT * FROM paciente where CI = '" . null . "' ");
+      $queryCliente = mysqli_query($con, $sqlCliente);
+    }
+
+    ?>
+
+    <h4 class="text-center">
+      <a href="registrarCliente.php" class="btn btn-primary mb-4">Registrar Paciente</a>
+      <br>
+      Pacientes Registrados
+    </h4>
+    <hr>
+
+    <div class="text-center" style="background-color: #cecece">
+      <div class="">
+        <strong>Lista de Pacientes <span style="color: crimson"> ( <?php echo $cantidad; ?> )</span> </strong>
       </div>
     </div>
 
@@ -75,8 +75,6 @@ $nombres = $_SESSION['nombres'];
             <div class="col-sm-12">
               <div class="row">
                 <div class="col-md-12 p-2">
-
-
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                       <thead>
@@ -84,41 +82,45 @@ $nombres = $_SESSION['nombres'];
                           <th scope="col">Nombres</th>
                           <th scope="col">Apellidos</th>
                           <th scope="col">CI</th>
-                          <th scope="col">Fecha Nacimiento</th>
+                          <th scope="col">Fecha de Nacimiento</th>
                           <th scope="col">Direccion</th>
-                          <th scope="col">Telefono</th>
                           <th scope="col">Correo</th>
-                          <th scope="col">Cargo</th>
-                          <th scope="col">Especialidad</th>
-                          <th scope="col">Turno</th>
+                          <th scope="col">Nº de Referencia</th>
+                          <th scope="col">Tipo de Sangre</th>
+                          <th scope="col">Seguro Medico</th>
+                          <th scope="col">Profesion</th>
                           <th scope="col">Nacionalidad</th>
+                          <th scope="col">Enfermedad de Base</th>
+                          <th scope="col">Persona de Referencia</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        while ($dataPersonal = mysqli_fetch_array($queryPersonal)) { ?>
+                        while ($dataCliente = mysqli_fetch_array($queryCliente)) { ?>
                           <tr>
-                            <td><?php echo $dataPersonal['NOMBRE']; ?></td>
-                            <td><?php echo $dataPersonal['APELLIDO']; ?></td>
-                            <td><?php echo $dataPersonal['CI']; ?></td>
-                            <td><?php echo $dataPersonal['FECHA_NACIMIENTO']; ?></td>
-                            <td><?php echo $dataPersonal['DIRECCION']; ?></td>
-                            <td><?php echo $dataPersonal['TELEFONO']; ?></td>
-                            <td><?php echo $dataPersonal['CORREO']; ?></td>
-                            <td><?php echo $dataPersonal['CARGO']; ?></td>
-                            <td><?php echo $dataPersonal['ESPECIALIDAD']; ?></td>
-                            <td><?php echo $dataPersonal['TURNO']; ?></td>
-                            <td><?php echo $dataPersonal['NACIONALIDAD']; ?></td>
+                            <td><?php echo $dataCliente['NOMBRE']; ?></td>
+                            <td><?php echo $dataCliente['APELLIDO']; ?></td>
+                            <td><?php echo $dataCliente['CI']; ?></td>
+                            <td><?php echo $dataCliente['FECHA_NACIMIENTO']; ?></td>
+                            <td><?php echo $dataCliente['DIRECCION']; ?></td>
+                            <td><?php echo $dataCliente['CORREO']; ?></td>
+                            <td><?php echo $dataCliente['NUMERO_REFERENCIA']; ?></td>
+                            <td><?php echo $dataCliente['TIPO_SANGRE']; ?></td>
+                            <td><?php echo $dataCliente['SEGURO_MEDICO']; ?></td>
+                            <td><?php echo $dataCliente['PROFESION']; ?></td>
+                            <td><?php echo $dataCliente['NACIONALIDAD']; ?></td>
+                            <td><?php echo $dataCliente['ENFERMEDAD_BASE']; ?></td>
+                            <td><?php echo $dataCliente['PERSONA_REFERENCIA']; ?></td>
 
                             <td>
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataPersonal['CODIGO']; ?>">
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataCliente['CODIGO']; ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                 </svg>
                               </button>
 
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataPersonal['CODIGO']; ?>">
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataCliente['CODIGO']; ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -146,7 +148,9 @@ $nombres = $_SESSION['nombres'];
         </div>
       </div>
     </div>
+
   </div>
 </div>
+
 
 <?php include("../include/footer.php") ?>

@@ -34,7 +34,7 @@ $nombres = $_SESSION['nombres'];
     <a href="" class="btn btn-primary w-25">Generar Consulta</a>
     <a href="" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
     <a href="" class="btn btn-primary w-25">Asignar Medico a Consulta</a>
-    <a href="" class="btn btn-primary w-25">Consultar Paciente</a>
+    <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
   </div>
 </div>
 

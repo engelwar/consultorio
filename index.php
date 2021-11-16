@@ -53,7 +53,7 @@ $nombres = $_SESSION['nombres'];
       <div class="links d-flex flex-column align-items-center justify-content-around mt-5">
         <a href="Paciente/index.php" class="text-white">Registro de Paciente</a>
         <a href="Personal/index.php" class="text-white">Registro de Personal</a>
-        <a href="Consulta/index.php" class="text-white">Consulta</a>
+        <a href="Consulta/index.php" class="text-white">Consultas</a>
       </div>
     </div>
   </div>
