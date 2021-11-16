@@ -1,7 +1,7 @@
 
 <?php
 include('../config.php');
-$idRegistros = $_REQUEST['CODIGO'];
+$idRegistros = $_REQUEST['id'];
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
 $ci      = $_REQUEST['ci'];
