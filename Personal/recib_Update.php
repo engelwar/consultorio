@@ -17,17 +17,17 @@ $nacionalidad 	 = $_REQUEST['nacionalidad'];
 
 $update = ("UPDATE personal 
 	SET 
-	nombres  ='" .$nombres. "',
-	apellidos  ='" .$apellidos. "',
-	ci ='" .$ci. "', 
-	fecha_nacimiento ='" .$fecha_nacimiento. "', 
-	direccion ='" .$direccion. "', 
-	telefono ='" .$telefono. "', 
-	correo ='" .$correo. "', 
-	cargo ='" .$cargo. "', 
-	especialidad ='" .$especialidad. "', 
-	turno ='" .$turno. "', 
-	nacionalidad ='" .$nacionalidad. "' 
+	NOMBRE  ='" .$nombres. "',
+	APELLIDO  ='" .$apellidos. "',
+	CI	 ='" .$ci. "', 
+	FECHA_NACIMIENTO ='" .$fecha_nacimiento. "', 
+	DIRECCION ='" .$direccion. "', 
+	TELEFONO ='" .$telefono. "', 
+	CORREO ='" .$correo. "', 
+	CARGO ='" .$cargo. "', 
+	ESPECIALIDAD ='" .$especialidad. "', 
+	TURNO ='" .$turno. "', 
+	NACIONALIDAD ='" .$nacionalidad. "' 
 
 WHERE CODIGO ='" .$idRegistros. "'
 ");

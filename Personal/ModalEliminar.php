@@ -10,7 +10,7 @@
 
         <div class="modal-body">
           <strong style="text-align: center !important"> 
-            <?php echo $dataPersonal['nombres']; ?>
+            <?php echo $dataPersonal['NOMBRE']; ?>
           </strong>
         </div>
         
