@@ -1,18 +1,18 @@
 
 <?php
 include('../config.php');
-$idRegistros = $_REQUEST['id'];
+$idRegistros = $_REQUEST['CODIGO'];
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
 $ci 	 = $_REQUEST['ci'];
-$nacionalidad 	 = $_REQUEST['nacionalidad'];
 $fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
 $direccion 	 = $_REQUEST['direccion'];
+$telefono 	 = $_REQUEST['telefono'];
+$correo 	 = $_REQUEST['correo'];
 $cargo 	 = $_REQUEST['cargo'];
 $especialidad 	 = $_REQUEST['especialidad'];
 $turno 	 = $_REQUEST['turno'];
-$correo 	 = $_REQUEST['correo'];
-$telefono 	 = $_REQUEST['telefono'];
+$nacionalidad 	 = $_REQUEST['nacionalidad'];
 
 
 $update = ("UPDATE personal 
@@ -20,16 +20,16 @@ $update = ("UPDATE personal
 	nombres  ='" .$nombres. "',
 	apellidos  ='" .$apellidos. "',
 	ci ='" .$ci. "', 
-	nacionalidad ='" .$nacionalidad. "', 
 	fecha_nacimiento ='" .$fecha_nacimiento. "', 
 	direccion ='" .$direccion. "', 
+	telefono ='" .$telefono. "', 
+	correo ='" .$correo. "', 
 	cargo ='" .$cargo. "', 
 	especialidad ='" .$especialidad. "', 
 	turno ='" .$turno. "', 
-	correo ='" .$correo. "', 
-	telefono ='" .$telefono. "' 
+	nacionalidad ='" .$nacionalidad. "' 
 
-WHERE id='" .$idRegistros. "'
+WHERE CODIGO ='" .$idRegistros. "'
 ");
 $result_update = mysqli_query($con, $update);
 

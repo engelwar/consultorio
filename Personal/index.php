@@ -28,7 +28,7 @@ $nombres = $_SESSION['nombres'];
   <?php
   include('../config.php');
 
-  $sqlPersonal   = ("SELECT * FROM personal ORDER BY id DESC ");
+  $sqlPersonal   = ("SELECT * FROM personal ORDER BY CODIGO DESC ");
   $queryPersonal = mysqli_query($con, $sqlPersonal);
   $cantidad     = mysqli_num_rows($queryPersonal);
   ?>
@@ -43,10 +43,7 @@ $nombres = $_SESSION['nombres'];
 
 
   <div class="row text-center" style="background-color: #cecece">
-    <div class="col-md-6">
-      <strong>Registrar Nuevo Paciente</strong>
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <strong>Lista de Pacientes <span style="color: crimson"> ( <?php echo $cantidad; ?> )</span> </strong>
     </div>
   </div>
@@ -67,38 +64,38 @@ $nombres = $_SESSION['nombres'];
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">CI</th>
-                        <th scope="col">Nacionalidad</th>
                         <th scope="col">Fecha Nacimiento</th>
                         <th scope="col">Direccion</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Correo</th>
                         <th scope="col">Cargo</th>
                         <th scope="col">Especialidad</th>
                         <th scope="col">Turno</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Nacionalidad</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       while ($dataPersonal = mysqli_fetch_array($queryPersonal)) { ?>
                         <tr>
-                          <td><?php echo $dataPersonal['nombres']; ?></td>
-                          <td><?php echo $dataPersonal['apellidos']; ?></td>
-                          <td><?php echo $dataPersonal['ci']; ?></td>
-                          <td><?php echo $dataPersonal['nacionalidad']; ?></td>
-                          <td><?php echo $dataPersonal['fecha_nacimiento']; ?></td>
-                          <td><?php echo $dataPersonal['direccion']; ?></td>
-                          <td><?php echo $dataPersonal['cargo']; ?></td>
-                          <td><?php echo $dataPersonal['especialidad']; ?></td>
-                          <td><?php echo $dataPersonal['turno']; ?></td>
-                          <td><?php echo $dataPersonal['correo']; ?></td>
-                          <td><?php echo $dataPersonal['telefono']; ?></td>
+                          <td><?php echo $dataPersonal['NOMBRE']; ?></td>
+                          <td><?php echo $dataPersonal['APELLIDO']; ?></td>
+                          <td><?php echo $dataPersonal['CI']; ?></td>
+                          <td><?php echo $dataPersonal['FECHA_NACIMIENTO']; ?></td>
+                          <td><?php echo $dataPersonal['DIRECCION']; ?></td>
+                          <td><?php echo $dataPersonal['TELEFONO']; ?></td>
+                          <td><?php echo $dataPersonal['CORREO']; ?></td>
+                          <td><?php echo $dataPersonal['CARGO']; ?></td>
+                          <td><?php echo $dataPersonal['ESPECIALIDAD']; ?></td>
+                          <td><?php echo $dataPersonal['TURNO']; ?></td>
+                          <td><?php echo $dataPersonal['NACIONALIDAD']; ?></td>
 
                           <td>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataPersonal['id']; ?>">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteChildresn<?php echo $dataPersonal['CODIGO']; ?>">
                               Eliminar
                             </button>
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataPersonal['id']; ?>">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataPersonal['CODIGO']; ?>">
                               Modificar
                             </button>
                           </td>

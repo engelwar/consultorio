@@ -1,7 +1,7 @@
 <?php
 include('../config.php');
-$idRegistros = $_REQUEST['id'];
+$idRegistros = $_REQUEST['CODIGO'];
 
-$DeleteRegistro = ("DELETE FROM personal WHERE id= '".$idRegistros."' ");
+$DeleteRegistro = ("DELETE FROM personal WHERE CODIGO = '".$idRegistros."' ");
 mysqli_query($con, $DeleteRegistro);
 ?>
