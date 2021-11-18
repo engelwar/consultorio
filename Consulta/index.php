@@ -1,7 +1,5 @@
 <?php include("../include/header.php") ?>
 
-<?php include("../include/header.php") ?>
-
 <?php
 
 session_start();
@@ -10,6 +8,7 @@ if (!isset($_SESSION['id'])) {
   header('Location: ../login_paciente.php');
 }
 
+$id = $_SESSION['id'];
 $nombres = $_SESSION['nombres'];
 
 ?>
@@ -29,10 +28,10 @@ $nombres = $_SESSION['nombres'];
 <div class="jumbotron d-flex align-items-center">
   <div class="container d-flex flex-column align-items-center" style="gap: 2rem;">
     <a href="" class="btn btn-primary w-25">Consultar Horarios de Atencion</a>
-    <a href="" class="btn btn-primary w-25">Consultar especialidades</a>
+    <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
     <a href="" class="btn btn-primary w-25">Consultar Medicos Disponibles</a>
     <a href="" class="btn btn-primary w-25">Generar Consulta</a>
-    <a href="" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
+    <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
     <a href="" class="btn btn-primary w-25">Asignar Medico a Consulta</a>
     <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
   </div>
