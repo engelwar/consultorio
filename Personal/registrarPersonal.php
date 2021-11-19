@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-12 mt-2">
                 <label for="fecha_nacimiento" class="form-label">Fecha nacimiento</label>
-                <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" min="01-01-1990" max="31-12-2000" step="2" autofocus>
+                <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" step="1" autofocus>
             </div>
             <div class="col-md-12 mt-2">
                 <label for="direccion" class="form-label">Direccion</label>

@@ -13,10 +13,8 @@ $nombres = $_SESSION['nombres'];
 
 include('../config.php');
 
-if (isset($_GET['especialidad']) == 'todos') {
-  $especialidad = $_GET['especialidad'];
-
-  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . $especialidad . "' ");
+if (isset($_GET['especialidad']) && $_GET['especialidad'] != 'todos') {
+  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . $_GET['especialidad'] . "' ");
   $queryPersonal = mysqli_query($con, $sqlPersonal);
   $cantidad     = mysqli_num_rows($queryPersonal);
 } else {
@@ -24,6 +22,9 @@ if (isset($_GET['especialidad']) == 'todos') {
   $queryPersonal = mysqli_query($con, $sqlPersonal);
   $cantidad     = mysqli_num_rows($queryPersonal);
 }
+
+$sqlEspecialidad = ("SELECT ESPECIALIDAD FROM personal");
+$queryEspecialidad = mysqli_query($con, $sqlEspecialidad);
 
 ?>
 
@@ -49,9 +50,11 @@ if (isset($_GET['especialidad']) == 'todos') {
         <div class="w-50 m-auto text-center">
           <select class="form-select w-100" aria-label="Default select example" name="especialidad">
             <option selected value="todos">Todos</option>
-            <option value="desarrollo">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <?php 
+            while ($dataEspecialidad = mysqli_fetch_array($queryEspecialidad)){
+            ?>
+            <option value="<?php echo $dataEspecialidad['ESPECIALIDAD']; ?>"><?php echo $dataEspecialidad['ESPECIALIDAD']; ?></option>
+            <?php } ?>
           </select>
         </div>
         <div class="mt-2 text-center">

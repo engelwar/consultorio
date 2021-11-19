@@ -11,6 +11,17 @@ if (!isset($_SESSION['id'])) {
 $id = $_SESSION['id'];
 $nombres = $_SESSION['nombres'];
 
+include('../config.php');
+
+$sqlEspecialistas = ("SELECT * FROM personal");
+$queryEspecialistas = mysqli_query($con, $sqlEspecialistas);
+
+if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
+  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . $_GET['especialidad'] . "' ");
+  $queryPersonal = mysqli_query($con, $sqlPersonal);
+  $cantidad     = mysqli_num_rows($queryPersonal);
+}
+
 ?>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
@@ -26,8 +37,40 @@ $nombres = $_SESSION['nombres'];
 </nav>
 
 <div class="jumbotron">
-  <div class="container">
-    
+  <div class="container text-center w-50">
+    <form action="registrar_reserva.php" method="$_POST">
+      <div class="col-md-12 mt-2">
+        <label for="">
+          <h4>Especialista en:</h4>
+        </label>
+        <select class="form-select w-100" aria-label="Default select example" name="especialidad">
+          <option selected>Sin seleccionar</option>
+          <?php while ($dataEspecialistas = mysqli_fetch_array($queryEspecialistas)) { ?>
+            <option value="<?php echo $dataEspecialistas['ESPECIALIDAD']; ?>"><?php echo $dataEspecialistas['ESPECIALIDAD']; ?></option>
+          <?php } ?>
+        </select>
+      </div>
+      <div class="col-md-12 mt-2">
+        <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+      </div>
+    </form>
+    <div class="col-md-12 mt-2 d-flex align-items-center justify-content-center">
+      <label for="" class="mr-4">
+        <h4>Especialistas en:</h4>
+      </label>
+      <select class="form-select" multiple aria-label="multiple select example">
+        <option selected>Open this select menu</option>
+        <?php
+        while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
+        ?>
+          <option value="1"><?php echo $dataPersonal['NOMBRE'].' '.$dataPersonal['APELLIDO']; ?></option>
+        <?php } ?>
+      </select>
+    </div>
+    <div class="col-md-12 mt-2">
+      <label for="fecha_nacimiento" class="form-label">Fecha nacimiento</label>
+      <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" step="1" autofocus>
+    </div>
   </div>
 </div>
 
