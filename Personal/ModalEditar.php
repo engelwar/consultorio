@@ -30,7 +30,7 @@
           </div>
           <div class="form-group">
             <label for="fecha_nacimiento" class="form-label">Fecha nacimiento</label>
-            <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" min="01-01-1990" max="31-12-2000" step="2" value="<?php echo $dataPersonal['FECHA_NACIMIENTO']; ?>">
+            <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" step="1" value="<?php echo $dataPersonal['FECHA_NACIMIENTO']; ?>">
           </div>
           <div class="form-group">
             <label for="direccion" class="form-label">Direccion</label>

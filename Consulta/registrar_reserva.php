@@ -19,7 +19,9 @@ $queryEspecialistas = mysqli_query($con, $sqlEspecialistas);
 if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
   $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . $_GET['especialidad'] . "' ");
   $queryPersonal = mysqli_query($con, $sqlPersonal);
-  $cantidad     = mysqli_num_rows($queryPersonal);
+} else {
+  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . null . "' ");
+  $queryPersonal = mysqli_query($con, $sqlPersonal);
 }
 
 ?>
@@ -35,9 +37,8 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
     <a class="navbar-brand ps-3" href="../logout.php">Cerrar Sesion</a>
   </div>
 </nav>
-
 <div class="jumbotron">
-  <div class="container text-center w-50">
+  <div class="container text-center w-50 shadow-lg p-4">
     <form action="registrar_reserva.php" method="$_POST">
       <div class="col-md-12 mt-2">
         <label for="">
@@ -54,22 +55,23 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <button type="submit" class="btn btn-danger">Consultar Medicos</button>
       </div>
     </form>
-    <div class="col-md-12 mt-2 d-flex align-items-center justify-content-center">
-      <label for="" class="mr-4">
-        <h4>Especialistas en:</h4>
-      </label>
-      <select class="form-select" multiple aria-label="multiple select example">
-        <option selected>Open this select menu</option>
-        <?php
-        while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
-        ?>
-          <option value="1"><?php echo $dataPersonal['NOMBRE'].' '.$dataPersonal['APELLIDO']; ?></option>
-        <?php } ?>
-      </select>
-    </div>
-    <div class="col-md-12 mt-2">
-      <label for="fecha_nacimiento" class="form-label">Fecha nacimiento</label>
-      <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" step="1" autofocus>
+    <div class="col-md-12 mt-4">
+      <form action="consultar_hora.php" method="$_POST">
+        <label for="" class="mr-4">
+          <h4>Especialistas en:</h4>
+        </label>
+        <select class="form-select" multiple aria-label="multiple select example" name="id">
+          <option selected>Open this select menu</option>
+          <?php
+          while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
+          ?>
+            <option value="<?php echo $dataPersonal['CODIGO']; ?>"><?php echo $dataPersonal['NOMBRE'] . ' ' . $dataPersonal['APELLIDO']; ?></option>
+          <?php } ?>
+        </select>
+        <div class="col-md-12 mt-2">
+          <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -52,7 +52,7 @@
         <div class="row justify-content-start text-center mt-5">
             <div class="col-2">
                 <button class="btn btn-primary btn-block" id="btnEnviar">
-                    Registrar Cliente
+                    Registrar Personal
                 </button>
             </div>
             <div class="col-2">
