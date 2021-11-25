@@ -37,12 +37,12 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
 <div class="jumbotron">
   <div class="container text-center w-50 shadow-lg p-4">
     <div class="col-md-12 mt-4">
-      <form action="consultar_hora.php" method="$_POST" class="row flex-column">
+      <form action="consultar_hora.php" method="$_POST" class="row flex-column" id="form_consulta">
         <label for="" class="mr-4">
           <h4>Medicos:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id">
-          <option selected>Sin seleccionar</option>
+        <select class="form-select" multiple aria-label="multiple select example" name="medico" id="medico">
+          <option selected value="null">Sin seleccionar</option>
           <?php
           while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
           ?>
@@ -52,17 +52,15 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <label for="" class="mr-4">
           <h4>Fecha:</h4>
         </label>
-        <input type="date" id="fecha_nacimiento" class="form-control" name="fecha_nacimiento" step="1" autofocus>
+        <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="">
+
+        <button type="button" id="actu" class="btn btn-info" onclick="select()">Consultar Horarios</button>
+
         <label for="" class="mr-4">
           <h4>Horarios:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id">
-          <option selected>Sin seleccionar</option>
-          <?php
-          while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
-          ?>
-            <option value="<?php echo $dataPersonal['CODIGO']; ?>"><?php echo $dataPersonal['NOMBRE'] . ' ' . $dataPersonal['APELLIDO']; ?></option>
-          <?php } ?>
+        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas">
+          
         </select>
         <div class="col-md-12 mt-2">
           <button type="submit" class="btn btn-danger">Consultar Medicos</button>
@@ -71,5 +69,29 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
     </div>
   </div>
 </div>
+<script>
+  function select(){
+    var medico_array = $('#medico').val();
+    var medico = medico_array[0];
+    console.log(medico);
+    var fecha_consulta = $('#fecha_consulta').val();
+    console.log(fecha_consulta);
+    
+    $.ajax({
+      url: 'datos_horario.php',
+      type: 'POST',
+      // dataType: 'json',
+      data: {dato1:medico, dato2:fecha_consulta},
+      success: function(res){
+        var js = JSON.parse(res);
+        var option;
+        for(var i = 0; i < js.length; i++){
+          option += '<option>'+js[i].INICIO+' - '+js[i].FIN+'</option>';
+        }
+        $('#horas').html(option);
+      }
+    });
+  };
+</script>
 
 <?php include('../include/footer.php') ?>
