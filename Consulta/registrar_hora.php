@@ -41,8 +41,7 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <label for="" class="mr-4">
           <h4>Medicos:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="medico" id="medico">
-          <option selected value="null">Sin seleccionar</option>
+        <select class="form-select" multiple aria-label="multiple select example" name="medico" id="medico" required>
           <?php
           while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
           ?>
@@ -52,18 +51,18 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <label for="" class="mr-4">
           <h4>Fecha:</h4>
         </label>
-        <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="">
+        <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="" required>
 
         <button type="button" id="actu" class="btn btn-info" onclick="select()">Consultar Horarios</button>
 
         <label for="" class="mr-4">
           <h4>Horarios:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas">
+        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required>
           
         </select>
         <div class="col-md-12 mt-2">
-          <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+          <button type="submit" class="btn btn-danger">Registrar Reserva</button>
         </div>
       </form>
     </div>
