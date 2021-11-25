@@ -73,9 +73,7 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
   function select(){
     var medico_array = $('#medico').val();
     var medico = medico_array[0];
-    console.log(medico);
     var fecha_consulta = $('#fecha_consulta').val();
-    console.log(fecha_consulta);
     
     $.ajax({
       url: 'datos_horario.php',
