@@ -29,7 +29,7 @@ $nombres = $_SESSION['nombres'];
   <div class="container d-flex flex-column align-items-center" style="gap: 2rem;">
     <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
     <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
-    <a href="" class="btn btn-primary w-25">Generar Consulta</a>
+    <a href="generar_consulta.php" class="btn btn-primary w-25">Generar Consulta</a>
     <a href="" class="btn btn-primary w-25">Asignar Medico a Consulta</a>
     <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
   </div>

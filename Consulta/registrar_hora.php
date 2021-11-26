@@ -37,8 +37,9 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
 <div class="jumbotron">
   <div class="container text-center w-50 shadow-lg p-4">
     <div class="col-md-12 mt-4">
-      <form action="consultar_hora.php" method="$_POST" class="row flex-column" id="form_consulta">
-        <label for="" class="mr-4">
+      <form action="accion_registra_reserva.php" method="$_POST" class="row flex-column" id="form_consulta">
+        <input type="text" name="idPaciente" value="<?php echo $id; ?>" class="d-none">
+        <label for="<?php echo $id; ?>" class="mr-4">
           <h4>Medicos:</h4>
         </label>
         <select class="form-select" multiple aria-label="multiple select example" name="medico" id="medico" required>
@@ -83,7 +84,7 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         var js = JSON.parse(res);
         var option;
         for(var i = 0; i < js.length; i++){
-          option += '<option>'+js[i].INICIO+' - '+js[i].FIN+'</option>';
+          option += '<option value="'+js[i].CODIGO+'">'+js[i].INICIO+' - '+js[i].FIN+'</option>';
         }
         $('#horas').html(option);
       }

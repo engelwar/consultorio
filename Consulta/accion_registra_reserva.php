@@ -1,27 +1,25 @@
 <?php
 
-session_start();
-
-if (!isset($_SESSION['id'])) {
-  header('Location: ../login_paciente.php');
-}
-
-$id = $_SESSION['id'];
-$nombres = $_SESSION['nombres'];
-
 include('../config.php');
 
-if (isset($_GET['id'])) {
-  $sqlPersonal = ("SELECT * FROM personal WHERE CODIGO = '" . $_GET['id'] . "' ");
-  $queryPersonal = mysqli_query($con, $sqlPersonal);
-  $dataPersonal = mysqli_fetch_array($queryPersonal);
-}
+  $idPaciente = $_GET['idPaciente'];
+  $idMedico = $_GET['medico'];
+  $idHorario = $_GET['id_horario'];
+  $Fecha = $_GET['fecha_consulta'];
 
-if (isset($_GET['fecha_consulta'])) {
-  $sqlConsultaHorario = ("SELECT t.* FROM reservas r, turnos t WHERE r.CODIGO_TURNOS != t.CODIGO AND r.FECHA_RESERVA = '".$_GET['fecha_consulta']."' ");
-  $queryConsultaHorario = mysqli_query($con, $sqlConsultaHorario);
-}
+  echo $idPaciente." ";
+  echo $idMedico." ";
+  echo $idHorario." ";
+  echo $Fecha." ";
 
-$Doctor = $dataPersonal['NOMBRE'];
+  $sqlAccion = (" INSERT INTO `reservas` (`CODIGO_RESERVA`, `CODIGO_PACIENTE`, `CODIGO_PERSONAL`, `CODIGO_TURNOS`, `FECHA_RESERVA`) VALUES (NULL, '".$idPaciente."', '".$idMedico."', '".$idHorario."', '".$Fecha."'); ");
 
-?>
+  $queryAccion = mysqli_query($con, $sqlAccion);
+
+  if($queryAccion){
+    header('Location: registrar_reserva.php');
+  } else {
+    echo "error";
+  }
+
+  ?>

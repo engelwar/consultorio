@@ -5,7 +5,7 @@ $fecha_consulta = $_POST['dato2'];
 
 include('../config.php');
 
-$sqlHoras = (" SELECT R.FECHA_RESERVA, T.INICIO, T.FIN
+$sqlHoras = (" SELECT T.CODIGO, R.FECHA_RESERVA, T.INICIO, T.FIN
 FROM reservas R, turnos T 
 WHERE concat(T.CODIGO,'-',R.CODIGO_RESERVA) not in(
     SELECT R.CODIGO_TURNOS
