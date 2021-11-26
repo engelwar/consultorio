@@ -1,5 +1,5 @@
 <!--ventana para Update--->
-<div class="modal fade" id="editChildresn<?php echo $dataPersonal['CODIGO']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="editChildresn<?php echo $dataConsulta['CODIGO_RESERVA']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #563d7c !important;">
@@ -12,13 +12,13 @@
       </div>
 
 
-      <form method="POST" action="recib_Update.php">
-        <input type="hidden" name="id" value="<?php echo $dataPersonal['CODIGO']; ?>">
+      <form method="POST" action="recibEditConsulta.php">
+        <input type="hidden" name="id" value="<?php echo $dataConsulta['CODIGO_RESERVA']; ?>">
 
         <div class="modal-body" id="cont_modal">
           <div class="form-group">
-            <label for="nacionalidad" class="form-label">Nacionalidad</label>
-            <input type="text" class="form-control" name="nacionalidad" required='true' value="<?php echo $dataPersonal['NACIONALIDAD']; ?>">
+            <label for="detalle" class="form-label">Detalle</label>
+            <input type="text" class="form-control" name="detalle" required='true' value="<?php echo $dataConsulta['DETALLE_CONSULTA']; ?>">
           </div>
         </div>
         <div class="modal-footer">

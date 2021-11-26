@@ -13,9 +13,21 @@ $nombres = $_SESSION['nombres'];
 
 include('../config.php');
 
-$sqlConsulta = ("SELECT FROM personal p, paciente pa, turnos t, consulta c WHERE ")
+if (isset($_GET['nombre'])) {
+  $nombrePaciente = $_REQUEST['nombre'];
+  $apellidoPaciente = $_REQUEST['apellido'];
+  $ciPaciente = $_REQUEST['ci'];
+
+  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, c.DETALLE_CONSULTA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA ");
+
+  $queryConsulta = mysqli_query($con, $sqlConsulta);
+} else {
+  $sqlConsulta = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
+  $queryConsulta = mysqli_query($con, $sqlConsulta);
+}
 
 ?>
+
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
   <!-- Navbar Brand-->
   <a class="navbar-brand ps-3" href="../index.php">CONSULTORIO</a>
@@ -29,24 +41,44 @@ $sqlConsulta = ("SELECT FROM personal p, paciente pa, turnos t, consulta c WHERE
 </nav>
 <div class="p-5">
   <div class="container w-50">
-    <form action="index.php" method="$_POST">
-      <div class="mb-3 text-center">
-        <label for="" class="form-label">Carnet de Identidad</label>
-        <input type="number" class="form-control" id="ci" name="ci" placeholder="123">
-      </div>
-      <div class="text-center">
-        <button class="btn btn-danger">Consultar</button>
+    <form action="generar_consulta.php" method="$_POST">
+      <div class="border p-4">
+        <h4 class="text-center">Datos del Paciente</h4>
+        <div class="mb-3">
+          <label for="" class="form-label">Nombres del Paciente</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php if(isset($_GET['nombre'])){
+            echo $nombrePaciente;
+          } else {
+            echo "";
+          } 
+          ?>">
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Apellidos del Paciente</label>
+          <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php if(isset($_GET['apellido'])){
+            echo $apellidoPaciente;
+          } else {
+            echo "";
+          } 
+          ?>">
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">CI</label>
+          <input type="number" class="form-control" id="ci" name="ci" required value="<?php if(isset($_GET['ci'])){
+            echo $ciPaciente;
+          } else {
+            echo "";
+          } 
+          ?>">
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger">Consultar</button>
+        </div>
       </div>
     </form>
   </div>
 
   <div class="mt-4">
-    <div class="text-center" style="background-color: #cecece">
-      <div class="">
-        <strong>Lista de Pacientes <span style="color: crimson"> ( <?php echo $cantidad; ?> )</span> </strong>
-      </div>
-    </div>
-
     <div class="row clearfix flex-row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="body">
@@ -61,41 +93,38 @@ $sqlConsulta = ("SELECT FROM personal p, paciente pa, turnos t, consulta c WHERE
                           <th scope="col">Nombres</th>
                           <th scope="col">Apellidos</th>
                           <th scope="col">CI</th>
-                          <th scope="col">Fecha de Nacimiento</th>
-                          <th scope="col">Correo</th>
-                          <th scope="col">Nº de Referencia</th>
                           <th scope="col">Tipo de Sangre</th>
                           <th scope="col">Enfermedad de Base</th>
-                          <th scope="col">Persona de Referencia</th>
                           <th scope="col">Fecha Consulta</th>
+                          <th scope="col">Medico Asignado</th>
                           <th scope="col">Detalle</th>
                         </tr>
                       </thead>
-                      <tbody> 
-                          <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                            <td>8</td>
-                            <td>9</td>
-                            <td>10</td>
-                            <td>11</td>
-                            <td>
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataCliente['CODIGO']; ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                          <!--Ventana Modal para Actualizar--->
-                          <?php include('ModalGenerarConsulta.php'); ?>
-                      
+                      <tbody>
+                        <?php while ($dataConsulta = mysqli_fetch_array($queryConsulta)) {?>
+                        <tr>
+                          <td><?php echo $dataConsulta['NOMBRE']; ?></td>
+                          <td><?php echo $dataConsulta['APELLIDO']; ?></td>
+                          <td><?php echo $dataConsulta['CI']; ?></td>
+                          <td><?php echo $dataConsulta['TIPO_SANGRE']; ?></td>
+                          <td><?php echo $dataConsulta['ENFERMEDAD_BASE']; ?></td>
+                          <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
+                          <td><?php echo $dataConsulta['personal'] ?></td>
+                          <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['CODIGO_RESERVA']; ?>">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        <!--Ventana Modal para Actualizar--->
+                        <?php include('ModalGenerarConsulta.php'); ?>
+
+                        <?php } ?>
+
                     </table>
                   </div>
                 </div>
