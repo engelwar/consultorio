@@ -6,7 +6,9 @@ if (!isset($_SESSION['id'])) {
   header('Location: principal.php');
 }
 
+// $ci = $_SESSION['ci'];
 $nombres = $_SESSION['nombres'];
+$rol = $_SESSION['rol'];
 
 ?>
 
@@ -51,9 +53,13 @@ $nombres = $_SESSION['nombres'];
         </h1>
       </div>
       <div class="links d-flex flex-column align-items-center justify-content-around mt-5">
-        <a href="Paciente/index.php" class="text-white">Paciente</a>
-        <a href="Personal/index.php" class="text-white">Personal</a>
-        <a href="Consulta/index.php" class="text-white">Consultas</a>
+        <?php if($rol == 'rrhh' || $rol == 'personal'){ ?>
+          <a href="Paciente/index.php" class="text-white">Paciente</a>
+          <a href="Personal/index.php" class="text-white">Personal</a>
+          <a href="Consulta/index.php" class="text-white">Consultas</a>
+        <?php } else { ?>
+          <a href="Consulta/index.php" class="text-white">Consultas</a>
+        <?php } ?>
       </div>
     </div>
   </div>

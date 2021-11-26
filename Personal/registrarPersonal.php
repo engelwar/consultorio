@@ -1,6 +1,6 @@
 <?php include("../include/header.php") ?>
 
-<div class="container mt-2 mb-3">
+<div class="container w-50 mt-2 mb-3">
     <form name="form-data" action="recibPersonal.php" method="POST">
     
         <div class="row">

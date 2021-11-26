@@ -23,7 +23,8 @@ $QueryInsert = ("INSERT INTO personal(
     CARGO,
     ESPECIALIDAD,
     TURNO,
-    NACIONALIDAD
+    NACIONALIDAD,
+    ROL
 )
 VALUES (
     '".$nombres. "',
@@ -36,7 +37,8 @@ VALUES (
     '".$cargo."',
     '".$especialidad."',
     '".$turno."',
-    '".$nacionalidad."'
+    '".$nacionalidad."',
+    'personal'
 )");
 $inserInmueble = mysqli_query($con, $QueryInsert);
 

@@ -11,6 +11,10 @@ if (!isset($_SESSION['id'])) {
 $id = $_SESSION['id'];
 $nombres = $_SESSION['nombres'];
 
+include('../config.php');
+
+$sqlConsulta = ("SELECT FROM personal p, paciente pa, turnos t, consulta c WHERE ")
+
 ?>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
   <!-- Navbar Brand-->

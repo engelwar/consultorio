@@ -27,7 +27,8 @@ $QueryInsert = ("INSERT INTO paciente(
     PROFESION,
     NACIONALIDAD,
     ENFERMEDAD_BASE,
-    PERSONA_REFERENCIA
+    PERSONA_REFERENCIA,
+    ROL
 )
 VALUES (
     '".$nombres. "',
@@ -42,7 +43,8 @@ VALUES (
     '".$profesion. "',
     '".$nacionalidad. "',
     '".$enfermedad_base."',
-    '".$personal_referencia. "'
+    '".$personal_referencia. "',
+    'paciente'
 )");
 $inserInmueble = mysqli_query($con, $QueryInsert);
 

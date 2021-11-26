@@ -1,6 +1,6 @@
 <?php include("../include/header.php") ?>
 
-<div class="container mt-2 mb-3">
+<div class="container w-50 mt-2 mb-3">
     <form name="form-data" action="recibCliente.php" method="POST">
 
         <div class="row">
@@ -59,7 +59,7 @@
 
         </div>
         <div class="row justify-content-start text-center mt-5">
-            <div class="col-2">
+            <div class="col-4">
                 <button class="btn btn-primary btn-block" id="btnEnviar">
                     Registrar Paciente
                 </button>

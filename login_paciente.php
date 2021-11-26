@@ -7,7 +7,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $sql = ("SELECT CODIGO , NOMBRE, CORREO, CI FROM paciente WHERE CORREO = '".$email."' ");
+        $sql = ("SELECT CODIGO , NOMBRE, CORREO, CI, ROL FROM paciente WHERE CORREO = '".$email."' ");
 
         $resultado = mysqli_query($con, $sql);
         $num = $resultado->num_rows;
@@ -21,6 +21,8 @@
             if ($password_bd == $password){
                 $_SESSION['id'] = $row['CODIGO'];
                 $_SESSION['nombres'] = $row['NOMBRE'];
+                $_SESSION['rol'] = $row['ROL'];
+                $_SESSION['ci'] = $row['CI'];
 
                 header('Location: index.php');
             }else{
