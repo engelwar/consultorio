@@ -13,60 +13,21 @@
 
 
       <form method="POST" action="recibEditConsulta.php">
-        <label for="" class="mr-4">
-          <h4>Medicos:</h4>
-        </label>
-        <select class="form-select" multiple aria-label="multiple select example" id="idMedico" required>
-          <?php
-          while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
-          ?>
-            <option value="<?php echo $dataPersonal['CODIGO']; ?>"><?php echo $dataPersonal['NOMBRE'] . ' ' . $dataPersonal['APELLIDO']; ?></option>
-          <?php } ?>
-        </select>
-        <label for="" class="mr-4">
-          <h4>Fecha:</h4>
-        </label>
-        <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="" required>
+        <input type="hidden" name="id" value="<?php echo $dataConsulta['CODIGO_RESERVA']; ?>">
 
-        <button type="button" id="actu" class="btn btn-info" onclick="select()">Consultar Horarios</button>
-
-        <label for="" class="mr-4">
-          <h4>Horarios:</h4>
-        </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
-        <div class="col-md-12 mt-2">
-          <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+        <div class="modal-body" id="cont_modal">
+          <div class="form-group">
+            <label for="detalle" class="form-label">Detalle</label>
+            <input type="text" class="form-control" name="detalle" required='true' value="<?php echo $dataConsulta['DETALLE_CONSULTA']; ?>">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </div>
       </form>
 
     </div>
   </div>
 </div>
-
-<script src="../js/jquery.min.js"></script>
-<script>
-  function select() {
-    var medico_array = $('#idMedico').val();
-    var medico = medico_array[0];
-    var fecha_consulta = $('#fecha_consulta').val();
-
-    $.ajax({
-      url: 'datos_horario.php',
-      type: 'POST',
-      // dataType: 'json',
-      data: {
-        dato1: medico,
-        dato2: fecha_consulta
-      },
-      success: function(res) {
-        var js = JSON.parse(res);
-        var option;
-        for (var i = 0; i < js.length; i++) {
-          option += '<option value="' + js[i].CODIGO + '">' + js[i].INICIO + ' - ' + js[i].FIN + '</option>';
-        }
-        $('#horas').html(option);
-      }
-    });
-  };
-</script>
 <!---fin ventana Update --->
