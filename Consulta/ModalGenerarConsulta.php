@@ -18,7 +18,7 @@
         <div class="modal-body" id="cont_modal">
           <div class="form-group">
             <label for="detalle" class="form-label">Detalle</label>
-            <input type="text" class="form-control" name="detalle" required='true' value="<?php echo $dataConsulta['DETALLE_CONSULTA']; ?>">
+            <input type="text" class="form-control" name="detalle" value="<?php echo $dataConsulta['DETALLE_CONSULTA']; ?>">
           </div>
         </div>
         <div class="modal-footer">
