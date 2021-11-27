@@ -31,20 +31,24 @@ $queryEspecialistas = mysqli_query($con, $sqlEspecialistas);
 </nav>
 <div class="jumbotron">
   <div class="container text-center w-50 shadow-lg p-4">
+    <div class="text-center mb-4">
+      <h2>Registrar Consulta</h2>
+    </div>
     <form action="registrar_hora.php" method="$_POST">
-      <div class="col-md-12 mt-2">
-        <label for="">
-          <h4>Especialista en:</h4>
-        </label>
-        <select class="form-select w-100" aria-label="Default select example" name="especialidad">
-          <option selected>Sin seleccionar</option>
-          <?php while ($dataEspecialistas = mysqli_fetch_array($queryEspecialistas)) { ?>
-            <option value="<?php echo $dataEspecialistas['ESPECIALIDAD']; ?>"><?php echo $dataEspecialistas['ESPECIALIDAD']; ?></option>
-          <?php } ?>
-        </select>
-      </div>
-      <div class="col-md-12 mt-2">
-        <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+      <div class="border p-4">
+        <div class="col-md-12 mt-2">
+          <label for="">
+            <h4>Especialista en:</h4>
+          </label>
+          <select class="form-select w-100" aria-label="Default select example" name="especialidad">
+            <?php while ($dataEspecialistas = mysqli_fetch_array($queryEspecialistas)) { ?>
+              <option value="<?php echo $dataEspecialistas['ESPECIALIDAD']; ?>"><?php echo $dataEspecialistas['ESPECIALIDAD']; ?></option>
+            <?php } ?>
+          </select>
+        </div>
+        <div class="col-md-12 mt-2">
+          <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+        </div>
       </div>
     </form>
   </div>

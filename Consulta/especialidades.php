@@ -47,18 +47,20 @@ $queryEspecialidad = mysqli_query($con, $sqlEspecialidad);
     </div>
     <div class="container w-50">
       <form action="especialidades.php" method="$_POST">
-        <div class="w-50 m-auto text-center">
-          <select class="form-select w-100" aria-label="Default select example" name="especialidad">
-            <option selected value="todos">Todos</option>
-            <?php 
-            while ($dataEspecialidad = mysqli_fetch_array($queryEspecialidad)){
-            ?>
-            <option value="<?php echo $dataEspecialidad['ESPECIALIDAD']; ?>"><?php echo $dataEspecialidad['ESPECIALIDAD']; ?></option>
-            <?php } ?>
-          </select>
-        </div>
-        <div class="mt-2 text-center">
-          <button class="btn btn-danger">Consultar</button>
+        <div class="border p-4">
+          <div class="w-50 m-auto text-center">
+            <select class="form-select w-100" aria-label="Default select example" name="especialidad">
+              <option selected value="todos">Todos</option>
+              <?php 
+              while ($dataEspecialidad = mysqli_fetch_array($queryEspecialidad)){
+              ?>
+              <option value="<?php echo $dataEspecialidad['ESPECIALIDAD']; ?>"><?php echo $dataEspecialidad['ESPECIALIDAD']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="mt-2 text-center">
+            <button class="btn btn-danger">Consultar</button>
+          </div>
         </div>
       </form>
     </div>

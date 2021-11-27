@@ -41,6 +41,9 @@ if (isset($_GET['nombre'])) {
 </nav>
 <div class="p-5">
   <div class="container w-50">
+    <div class="text-center mb-4">
+      <h2>Consultar Paciente</h2>
+    </div>
     <form action="consultar_paciente.php" method="$_POST">
       <div class="border p-4">
         <h4 class="text-center">Datos del Paciente</h4>

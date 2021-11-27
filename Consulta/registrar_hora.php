@@ -14,7 +14,8 @@ $nombres = $_SESSION['nombres'];
 include('../config.php');
 
 if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
-  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . $_GET['especialidad'] . "' ");
+  $especialidadPersonal = $_GET['especialidad'];
+  $sqlPersonal   = ("SELECT CODIGO, NOMBRE, APELLIDO, ESPECIALIDAD FROM personal WHERE ESPECIALIDAD = '".$especialidadPersonal."' ");
   $queryPersonal = mysqli_query($con, $sqlPersonal);
 } else {
   $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . null . "' ");
@@ -36,13 +37,16 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
 </nav>
 <div class="jumbotron">
   <div class="container text-center w-50 shadow-lg p-4">
-    <div class="col-md-12 mt-4">
+    <div class="text-center mb-4">
+      <h2>Registrar Consulta</h2>
+    </div>
+    <div class="col-md-12 mt-4 border p-4">
       <form action="accion_registra_reserva.php" method="$_POST" class="row flex-column" id="form_consulta">
         <input type="text" name="idPaciente" value="<?php echo $id; ?>" class="d-none">
-        <label for="<?php echo $id; ?>" class="mr-4">
+        <label for="" class="mr-4">
           <h4>Medicos:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="medico" id="medico" required>
+        <select class="form-select" multiple aria-label="multiple select example" name="idMedico" id="idMedico" required>
           <?php
           while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
           ?>
@@ -59,32 +63,34 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <label for="" class="mr-4">
           <h4>Horarios:</h4>
         </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required>
-          
-        </select>
+        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
         <div class="col-md-12 mt-2">
           <button type="submit" class="btn btn-danger">Registrar Reserva</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 <script>
-  function select(){
-    var medico_array = $('#medico').val();
+  function select() {
+    var medico_array = $('#idMedico').val();
     var medico = medico_array[0];
     var fecha_consulta = $('#fecha_consulta').val();
-    
+
     $.ajax({
       url: 'datos_horario.php',
       type: 'POST',
       // dataType: 'json',
-      data: {dato1:medico, dato2:fecha_consulta},
-      success: function(res){
+      data: {
+        dato1: medico,
+        dato2: fecha_consulta
+      },
+      success: function(res) {
         var js = JSON.parse(res);
         var option;
-        for(var i = 0; i < js.length; i++){
-          option += '<option value="'+js[i].CODIGO+'">'+js[i].INICIO+' - '+js[i].FIN+'</option>';
+        for (var i = 0; i < js.length; i++) {
+          option += '<option value="' + js[i].CODIGO + '">' + js[i].INICIO + ' - ' + js[i].FIN + '</option>';
         }
         $('#horas').html(option);
       }
