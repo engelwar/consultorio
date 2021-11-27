@@ -99,8 +99,8 @@ if (isset($_GET['nombre'])) {
                           <th scope="col">Tipo de Sangre</th>
                           <th scope="col">Enfermedad de Base</th>
                           <th scope="col">Fecha Consulta</th>
-                          <th scope="col">Hora Consulta</th>
                           <th scope="col">Medico Asignado</th>
+                          <th scope="col">Hora Consulta</th>
                           <th scope="col">Detalle</th>
                         </tr>
                       </thead>
