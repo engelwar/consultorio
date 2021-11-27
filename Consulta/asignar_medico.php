@@ -123,7 +123,7 @@ if (isset($_GET['nombre'])) {
                           </td>
                         </tr>
                         <!--Ventana Modal para Actualizar--->
-                        <?php include('ModalGenerarConsulta.php'); ?>
+                        <?php include('ModalAsignarMedico.php'); ?>
 
                         <?php } ?>
 

@@ -8,7 +8,6 @@
     <title>Consultorio</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/cargando.css">
-    <link rel="stylesheet" type="text/css" href="../css/maquinawrite.css">
     <style>
         table tr th {
             background: rgba(0, 0, 0, .6);
