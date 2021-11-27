@@ -18,7 +18,7 @@ if (isset($_GET['nombre'])) {
   $apellidoPaciente = $_REQUEST['apellido'];
   $ciPaciente = $_REQUEST['ci'];
 
-  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO ");
+  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA ");
 
   $queryConsulta = mysqli_query($con, $sqlConsulta);
 } else {
@@ -112,8 +112,8 @@ if (isset($_GET['nombre'])) {
                           <td><?php echo $dataConsulta['CI']; ?></td>
                           <td><?php echo $dataConsulta['TIPO_SANGRE']; ?></td>
                           <td><?php echo $dataConsulta['ENFERMEDAD_BASE']; ?></td>
-                          <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
                           <td><?php echo $dataConsulta['personal'] ?></td>
+                          <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
                           <td><?php echo $dataConsulta['turnos'] ?></td>
                           <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
                         </tr>
