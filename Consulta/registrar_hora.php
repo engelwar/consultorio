@@ -66,7 +66,6 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
         <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
         <div class="col-md-12 mt-2">
           <button type="submit" class="btn btn-danger">Registrar Reserva</button>
-          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </div>
       </form>
     </div>
