@@ -34,10 +34,12 @@ $rol = $_SESSION['rol'];
     <a href="generar_consulta.php" class="btn btn-primary w-25">Generar Consulta</a>
     <a href="asignar_medico.php" class="btn btn-primary w-25">Asignar Medico a Consulta</a>
     <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
+    <a href="detalle_resultados_servicios.php" class="btn btn-primary w-25">Detalle Resultado Servicio</a>
   <?php }elseif($rol == 'personal'){ ?>
     <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
     <a href="generar_consulta.php" class="btn btn-primary w-25">Generar Consulta</a>
     <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
+    <a href="detalle_resultados_servicios.php" class="btn btn-primary w-25">Detalle Resultado Servicio</a>
   <?php } else{ ?>
     <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
     <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>

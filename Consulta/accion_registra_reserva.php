@@ -26,7 +26,7 @@ if ($queryAccion) {
 
     $queryConsulta = mysqli_query($con, $sqlConsulta);
     if ($queryConsulta) {
-      header('Location: registrar_reserva.php');
+      header('Location: solicitar_servicio.php');
     } else {
       echo "error";
     }
