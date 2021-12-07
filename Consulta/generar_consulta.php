@@ -18,7 +18,7 @@ if (isset($_GET['nombre'])) {
   $apellidoPaciente = $_REQUEST['apellido'];
   $ciPaciente = $_REQUEST['ci'];
 
-  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal,GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA ");
+  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA, s.DESCRIPCION, drs.DETALLE_RESULTADO_SERVICIO FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_solicitud_servicios dss, servicios s, detalle_resultados_servicios drs WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND pa.CODIGO = ss.CODIGO_PACIENTE AND ss.NUMERO_SOLICITUD = dss.NUMERO_SOLICITUD AND dss.CODIGO_SERVICIO = s.CODIGO_SERVICIO AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO ");
 
   $queryConsulta = mysqli_query($con, $sqlConsulta);
 } else {
@@ -102,6 +102,8 @@ if (isset($_GET['nombre'])) {
                           <th scope="col">Hora Consulta</th>
                           <th scope="col">Medico Asignado</th>
                           <th scope="col">Detalle</th>
+                          <th scope="col">Servicio</th>
+                          <th scope="col">Detalle Servicio</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -116,6 +118,8 @@ if (isset($_GET['nombre'])) {
                           <td><?php echo $dataConsulta['turnos']; ?></td>
                           <td><?php echo $dataConsulta['personal'] ?></td>
                           <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
+                          <td><?php echo $dataConsulta['DESCRIPCION']; ?></td>
+                          <td><?php echo $dataConsulta['DETALLE_RESULTADO_SERVICIO']; ?></td>
                           <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['CODIGO_RESERVA']; ?>">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

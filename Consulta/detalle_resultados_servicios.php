@@ -19,7 +19,7 @@ if (isset($_GET['nombre'])) {
   $apellidoPaciente = $_REQUEST['apellido'];
   $ciPaciente = $_REQUEST['ci'];
 
-  $sqlConsulta = ("SELECT DISTINCT drs.NUMERO_SOLICITUD_SERVICIO, drs.DETALLE_RESULTADO_SERVICIO, r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_resultados_servicios drs WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND c.NUMERO_CONSULTA = ss.NUMERO_CONSULTA AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO ");
+  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA, s.DESCRIPCION, drs.DETALLE_RESULTADO_SERVICIO, drs.NUMERO_SOLICITUD_SERVICIO FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_solicitud_servicios dss, servicios s, detalle_resultados_servicios drs WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND pa.CODIGO = ss.CODIGO_PACIENTE AND ss.NUMERO_SOLICITUD = dss.NUMERO_SOLICITUD AND dss.CODIGO_SERVICIO = s.CODIGO_SERVICIO AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO ");
   $queryConsulta = mysqli_query($con, $sqlConsulta);
 } else {
   $sqlConsulta = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
@@ -103,6 +103,7 @@ if (isset($_GET['nombre'])) {
                           <th scope="col">Fecha Consulta</th>
                           <th scope="col">Hora Consulta</th>
                           <th scope="col">Detalle</th>
+                          <th scope="col">Servicio</th>
                           <th scope="col">Detalle Resultado de Servicio</th>
                         </tr>
                       </thead>
@@ -118,6 +119,7 @@ if (isset($_GET['nombre'])) {
                           <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
                           <td><?php echo $dataConsulta['turnos'] ?></td>
                           <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
+                          <td><?php echo $dataConsulta['DESCRIPCION']; ?></td>
                           <td><?php echo $dataConsulta['DETALLE_RESULTADO_SERVICIO']; ?></td>
                           <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['NUMERO_SOLICITUD_SERVICIO']; ?>">
