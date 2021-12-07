@@ -10,20 +10,16 @@ if (!isset($_SESSION['id'])) {
 
 $id = $_SESSION['id'];
 $nombres = $_SESSION['nombres'];
+$rol = $_SESSION['rol'];
 
 include('../config.php');
 
-if (isset($_GET['nombre'])) {
+if(isset($_GET['nombre'])){
   $nombrePaciente = $_REQUEST['nombre'];
   $apellidoPaciente = $_REQUEST['apellido'];
   $ciPaciente = $_REQUEST['ci'];
-
-  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA, s.DESCRIPCION, drs.DETALLE_RESULTADO_SERVICIO FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_solicitud_servicios dss, servicios s, detalle_resultados_servicios drs WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND pa.CODIGO = ss.CODIGO_PACIENTE AND ss.NUMERO_SOLICITUD = dss.NUMERO_SOLICITUD AND dss.CODIGO_SERVICIO = s.CODIGO_SERVICIO AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO ");
-
+  $sqlConsulta = (" SELECT p.NOMBRE, p.APELLIDO, p.CI, p.TIPO_SANGRE, p.ENFERMEDAD_BASE, s.DETALLE, r.NUMERO_ANALISIS, r.DETALLE_RESULTADO_LABORATORIO FROM paciente p, solicitud_analisis s, resultado_analisis r WHERE p.NOMBRE = '$nombrePaciente' AND p.APELLIDO = '$apellidoPaciente' AND p.CI = $ciPaciente AND p.CODIGO = s.CODIGO_PACIENTE AND s.NUMERO_ANALISIS = r.NUMERO_ANALISIS ");
   $queryConsulta = mysqli_query($con, $sqlConsulta);
-
-  $sqlConsulta2 = (" SELECT s.DETALLE, r.DETALLE_RESULTADO_LABORATORIO FROM paciente p, solicitud_analisis s, resultado_analisis r WHERE p.CODIGO = s.CODIGO_PACIENTE AND s.NUMERO_ANALISIS = r.NUMERO_ANALISIS AND p.NOMBRE = '$nombrePaciente' AND p.APELLIDO = '$apellidoPaciente' AND p.CI = $ciPaciente ");
-  $queryConsulta2 = mysqli_query($con, $sqlConsulta2);
 } else {
   $sqlConsulta = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
   $queryConsulta = mysqli_query($con, $sqlConsulta);
@@ -42,12 +38,13 @@ if (isset($_GET['nombre'])) {
     <a class="navbar-brand ps-3" href="../logout.php">Cerrar Sesion</a>
   </div>
 </nav>
+
 <div class="p-5">
   <div class="container w-50">
     <div class="text-center mb-4">
-      <h2>Consultar Paciente</h2>
+      <h2>Resultado de Analisis</h2>
     </div>
-    <form action="consultar_paciente.php" method="$_POST">
+    <form action="resultado_analisis.php" method="$_POST">
       <div class="border p-4">
         <h4 class="text-center">Datos del Paciente</h4>
         <div class="mb-3">
@@ -100,12 +97,8 @@ if (isset($_GET['nombre'])) {
                           <th scope="col">CI</th>
                           <th scope="col">Tipo de Sangre</th>
                           <th scope="col">Enfermedad de Base</th>
-                          <th scope="col">Medico Asignado</th>
-                          <th scope="col">Fecha Consulta</th>
-                          <th scope="col">Hora Consulta</th>
-                          <th scope="col">Detalle</th>
-                          <th scope="col">Servicio</th>
-                          <th scope="col">Detalle Servicio</th>
+                          <th scope="col">Solicitud de Analisis</th>
+                          <th scope="col">Resultado Laboratorio</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -115,48 +108,19 @@ if (isset($_GET['nombre'])) {
                           <td><?php echo $dataConsulta['CI']; ?></td>
                           <td><?php echo $dataConsulta['TIPO_SANGRE']; ?></td>
                           <td><?php echo $dataConsulta['ENFERMEDAD_BASE']; ?></td>
-                          <td><?php echo $dataConsulta['personal'] ?></td>
-                          <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
-                          <td><?php echo $dataConsulta['turnos'] ?></td>
-                          <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
-                          <td><?php echo $dataConsulta['DESCRIPCION']; ?></td>
-                          <td><?php echo $dataConsulta['DETALLE_RESULTADO_SERVICIO']; ?></td>
+                          <td><?php echo $dataConsulta['DETALLE']; ?></td>
+                          <td><?php echo $dataConsulta['DETALLE_RESULTADO_LABORATORIO']; ?></td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['NUMERO_ANALISIS']; ?>">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                              </svg>
+                              Resultado Laboratorio
+                            </button>
+                          </td>
                         </tr>
-                        <?php } ?>
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-4">
-    <div class="row clearfix flex-row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="body">
-          <div class="row clearfix">
-            <div class="col-sm-12">
-              <div class="row">
-                <div class="col-md-10 p-2 m-auto">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">Solicitud de Analisis</th>
-                          <th scope="col">Resultado de Analisis</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php while ($dataConsulta2 = mysqli_fetch_array($queryConsulta2)) {?>
-                        <tr>
-                          <td><?php echo $dataConsulta2['DETALLE']; ?></td>
-                          <td><?php echo $dataConsulta2['DETALLE_RESULTADO_LABORATORIO']; ?></td>
-                        </tr>
+                        <?php include('ModalResultadoAnalisis.php'); ?>
                         <?php } ?>
 
                     </table>

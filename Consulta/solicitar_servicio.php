@@ -26,7 +26,7 @@ if (isset($_GET['codigo_servicio']) && $_GET['codigo_servicio'] != 'todos') {
   if ($queryConsultaMedica) {
     $row = $queryConsultaMedica->fetch_assoc();
     $numero_consulta = $row['NUMERO_CONSULTA'];
-    $fechaSolicitud = date("YYYY-MM-DD hh:mm:ss");
+    $fechaSolicitud = date('Y-m-d H:i:s');
     $sqlSolicitudServicio = (" INSERT INTO solicitud_servicios(
       CODIGO_PACIENTE,
       NUMERO_CONSULTA,

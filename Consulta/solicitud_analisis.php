@@ -12,6 +12,53 @@ $id = $_SESSION['id'];
 $nombres = $_SESSION['nombres'];
 $rol = $_SESSION['rol'];
 
+include("../config.php");
+
+$sqlConsulta = (" SELECT cm.NUMERO_CONSULTA FROM reservas r, consulta_medica cm WHERE r.CODIGO_RESERVA = cm.CODIGO_RESERVA AND r.CODIGO_PACIENTE = '".$id."' ");
+$queryConsulta = mysqli_query($con, $sqlConsulta);
+if($queryConsulta){
+  $row = $queryConsulta->fetch_assoc();
+  $numero_consulta = $row['NUMERO_CONSULTA'];
+  if(isset($_GET['detalle'])){
+    $detalle = $_GET['detalle'];
+    $fecha = date('Y-m-d H:i:s');
+    $sqlSolicitud = (" INSERT INTO solicitud_analisis(
+      NUMERO_CONSULTA,
+      CODIGO_PACIENTE,
+      DETALLE,
+      FECHA
+    )
+    VALUES(
+      '".$numero_consulta."',
+      '".$id."',
+      '".$detalle."',
+      '".$fecha."'
+    ) ");
+    $querySolicitud = mysqli_query($con, $sqlSolicitud);
+    if($querySolicitud){
+      $sqlConsultaAnalisis = (" SELECT MAX(NUMERO_ANALISIS) FROM `solicitud_analisis` WHERE CODIGO_PACIENTE = '".$id."' ");
+      $queryConsultaAnalisis = mysqli_query($con, $sqlConsultaAnalisis);
+      $row2 = $queryConsultaAnalisis->fetch_assoc();
+      $numero_analisis = $row2['MAX(NUMERO_ANALISIS)'];
+      $detalleTest = ' ';
+      $sqlResultado = (" INSERT INTO resultado_analisis(
+        NUMERO_ANALISIS,
+        DETALLE_RESULTADO_LABORATORIO,
+        FECHA
+      )
+      VALUES(
+        '".$numero_analisis."',
+        '".$detalleTest."',
+        '".$fecha."'
+      ) ");
+      $queryResultado = mysqli_query($con, $sqlResultado);
+      if($queryResultado){
+        header('Location: index.php');
+      }
+    }
+  }
+}
+
 ?>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
@@ -25,5 +72,22 @@ $rol = $_SESSION['rol'];
     <a class="navbar-brand ps-3" href="../logout.php">Cerrar Sesion</a>
   </div>
 </nav>
+
+<div class="jumbotron">
+  <div class="container w-50 border p-3">
+    <div class="text-center mb-4">
+      <h2>Solicitar Analisis</h2>
+    </div>
+    <form action="solicitud_analisis.php" method="$_POST">
+      <div class="mb-3 w-75 m-auto">
+        <label for="exampleFormControlTextarea1" class="form-label">Detalle de los analisis</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle"></textarea>
+      </div>
+      <div class="text-center mt-2">
+        <button class="btn btn-danger">Solicitar</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <?php include("../include/footer.php") ?>
