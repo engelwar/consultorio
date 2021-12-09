@@ -24,12 +24,18 @@ if (isset($_GET['nombre'])) {
 
   $sqlConsulta2 = (" SELECT s.DETALLE, r.DETALLE_RESULTADO_LABORATORIO FROM paciente p, solicitud_analisis s, resultado_analisis r WHERE p.CODIGO = s.CODIGO_PACIENTE AND s.NUMERO_ANALISIS = r.NUMERO_ANALISIS AND p.NOMBRE = '$nombrePaciente' AND p.APELLIDO = '$apellidoPaciente' AND p.CI = $ciPaciente ");
   $queryConsulta2 = mysqli_query($con, $sqlConsulta2);
+
+  $sqlConsulta3 = (" SELECT dr.NOMBRE_MEDICAMENTO, dr.POSOLOGIA, dr.CANTIDAD FROM paciente p, reservas r, consulta_medica cm, receta_medica rm, detalle_receta dr WHERE p.NOMBRE = '$nombrePaciente' AND p.APELLIDO = '$apellidoPaciente' AND p.CI = $ciPaciente AND p.CODIGO = r.CODIGO_PACIENTE AND r.CODIGO_RESERVA = cm.CODIGO_RESERVA AND cm.NUMERO_CONSULTA = rm.CODIGO_CONSULTA AND rm.NUMERO_RECETA = dr.NUMERO_RECETA ");
+  $queryConsulta3 = mysqli_query($con, $sqlConsulta3);
 } else {
   $sqlConsulta = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
   $queryConsulta = mysqli_query($con, $sqlConsulta);
 
   $sqlConsulta2 = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
   $queryConsulta2 = mysqli_query($con, $sqlConsulta);
+
+  $sqlConsulta3 = ("SELECT NOMBRE FROM personal WHERE NOMBRE IS NULL ");
+  $queryConsulta3 = mysqli_query($con, $sqlConsulta);
 }
 
 ?>
@@ -45,7 +51,9 @@ if (isset($_GET['nombre'])) {
     <a class="navbar-brand ps-3" href="../logout.php">Cerrar Sesion</a>
   </div>
 </nav>
-<a href="index.php" class="position-absolute ml-4"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="backward" class="svg-inline--fa fa-backward fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M11.5 280.6l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2zm256 0l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2z"></path></svg>Volver a Consultas</a>
+<a href="index.php" class="position-absolute ml-4"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="backward" class="svg-inline--fa fa-backward fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <path fill="currentColor" d="M11.5 280.6l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2zm256 0l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2z"></path>
+  </svg>Volver a Consultas</a>
 <div class="p-5">
   <div class="container w-50">
     <div class="text-center mb-4">
@@ -56,30 +64,30 @@ if (isset($_GET['nombre'])) {
         <h4 class="text-center">Datos del Paciente</h4>
         <div class="mb-3">
           <label for="" class="form-label">Nombres del Paciente</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php if(isset($_GET['nombre'])){
-            echo $nombrePaciente;
-          } else {
-            echo "";
-          } 
-          ?>">
+          <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php if (isset($_GET['nombre'])) {
+                                                                                              echo $nombrePaciente;
+                                                                                            } else {
+                                                                                              echo "";
+                                                                                            }
+                                                                                            ?>">
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Apellidos del Paciente</label>
-          <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php if(isset($_GET['apellido'])){
-            echo $apellidoPaciente;
-          } else {
-            echo "";
-          } 
-          ?>">
+          <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php if (isset($_GET['apellido'])) {
+                                                                                                  echo $apellidoPaciente;
+                                                                                                } else {
+                                                                                                  echo "";
+                                                                                                }
+                                                                                                ?>">
         </div>
         <div class="mb-3">
           <label for="" class="form-label">CI</label>
-          <input type="number" class="form-control" id="ci" name="ci" required value="<?php if(isset($_GET['ci'])){
-            echo $ciPaciente;
-          } else {
-            echo "";
-          } 
-          ?>">
+          <input type="number" class="form-control" id="ci" name="ci" required value="<?php if (isset($_GET['ci'])) {
+                                                                                        echo $ciPaciente;
+                                                                                      } else {
+                                                                                        echo "";
+                                                                                      }
+                                                                                      ?>">
         </div>
         <div class="text-center">
           <button class="btn btn-danger">Consultar</button>
@@ -113,19 +121,19 @@ if (isset($_GET['nombre'])) {
                         </tr>
                       </thead>
                       <tbody>
-                        <?php while ($dataConsulta = mysqli_fetch_array($queryConsulta)) {?>
-                        <tr>
-                          <td><?php echo $dataConsulta['APELLIDO'].' '.$dataConsulta['NOMBRE']; ?></td>
-                          <td><?php echo $dataConsulta['CI']; ?></td>
-                          <td><?php echo $dataConsulta['TIPO_SANGRE']; ?></td>
-                          <td><?php echo $dataConsulta['ENFERMEDAD_BASE']; ?></td>
-                          <td><?php echo $dataConsulta['personal'] ?></td>
-                          <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
-                          <td><?php echo $dataConsulta['turnos'] ?></td>
-                          <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
-                          <td><?php echo $dataConsulta['DESCRIPCION']; ?></td>
-                          <td><?php echo $dataConsulta['DETALLE_RESULTADO_SERVICIO']; ?></td>
-                        </tr>
+                        <?php while ($dataConsulta = mysqli_fetch_array($queryConsulta)) { ?>
+                          <tr>
+                            <td><?php echo $dataConsulta['APELLIDO'] . ' ' . $dataConsulta['NOMBRE']; ?></td>
+                            <td><?php echo $dataConsulta['CI']; ?></td>
+                            <td><?php echo $dataConsulta['TIPO_SANGRE']; ?></td>
+                            <td><?php echo $dataConsulta['ENFERMEDAD_BASE']; ?></td>
+                            <td><?php echo $dataConsulta['personal'] ?></td>
+                            <td><?php echo $dataConsulta['FECHA_RESERVA']; ?></td>
+                            <td><?php echo $dataConsulta['turnos'] ?></td>
+                            <td><?php echo $dataConsulta['DETALLE_CONSULTA']; ?></td>
+                            <td><?php echo $dataConsulta['DESCRIPCION']; ?></td>
+                            <td><?php echo $dataConsulta['DETALLE_RESULTADO_SERVICIO']; ?></td>
+                          </tr>
                         <?php } ?>
 
                     </table>
@@ -147,6 +155,9 @@ if (isset($_GET['nombre'])) {
             <div class="col-sm-12">
               <div class="row">
                 <div class="col-md-10 p-2 m-auto">
+                  <div class="text-center mb-4">
+                    <h2>Detalle de Analisis</h2>
+                  </div>
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                       <thead>
@@ -156,11 +167,51 @@ if (isset($_GET['nombre'])) {
                         </tr>
                       </thead>
                       <tbody>
-                        <?php while ($dataConsulta2 = mysqli_fetch_array($queryConsulta2)) {?>
+                        <?php while ($dataConsulta2 = mysqli_fetch_array($queryConsulta2)) { ?>
+                          <tr>
+                            <td><?php echo $dataConsulta2['DETALLE']; ?></td>
+                            <td><?php echo $dataConsulta2['DETALLE_RESULTADO_LABORATORIO']; ?></td>
+                          </tr>
+                        <?php } ?>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="row clearfix flex-row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="body">
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-10 p-2 m-auto">
+                  <div class="text-center mb-4">
+                    <h2>Detalle de Recetas</h2>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                      <thead>
                         <tr>
-                          <td><?php echo $dataConsulta2['DETALLE']; ?></td>
-                          <td><?php echo $dataConsulta2['DETALLE_RESULTADO_LABORATORIO']; ?></td>
+                          <th scope="col">Nombre de Medicamento</th>
+                          <th scope="col">Posologia</th>
+                          <th scope="col">Cantidad</th>
                         </tr>
+                      </thead>
+                      <tbody>
+                        <?php while ($dataConsulta3 = mysqli_fetch_array($queryConsulta3)) { ?>
+                          <tr>
+                            <td><?php echo $dataConsulta3['NOMBRE_MEDICAMENTO']; ?></td>
+                            <td><?php echo $dataConsulta3['POSOLOGIA']; ?></td>
+                            <td><?php echo $dataConsulta3['CANTIDAD']; ?></td>
+                          </tr>
                         <?php } ?>
 
                     </table>
