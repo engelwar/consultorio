@@ -20,15 +20,29 @@ if ($queryAccion) {
   if ($num > 0) {
     $row = $queryConsultaAccion->fetch_assoc();
     $idReserva = $row['CODIGO_RESERVA'];
-    echo $idReserva;
-
     $sqlConsulta = (" INSERT INTO `consulta_medica` (`NUMERO_CONSULTA`, `CODIGO_RESERVA`, `DETALLE_CONSULTA`) VALUES (NULL, '" . $idReserva . "', NULL); ");
-
     $queryConsulta = mysqli_query($con, $sqlConsulta);
-    if ($queryConsulta) {
-      header('Location: solicitar_servicio.php');
-    } else {
-      echo "error";
+    if($queryConsulta){
+      $sqlConsultaMedica = (" SELECT NUMERO_CONSULTA FROM consulta_medica WHERE CODIGO_RESERVA = $idReserva ");
+      $queryConsultaMedica = mysqli_query($con, $sqlConsultaMedica);
+      if($queryConsultaMedica){
+        $row2 = $queryConsultaMedica->fetch_assoc();
+        $numero_consulta = $row2['NUMERO_CONSULTA'];
+        $sqlReceta = (" INSERT INTO receta_medica(
+          CODIGO_CONSULTA,
+          FECHA
+        )
+        VALUES(
+          '".$numero_consulta."',
+          '".$Fecha."'
+        ) ");
+        $queryReceta = mysqli_query($con, $sqlReceta);
+        if ($queryReceta) {
+          header('Location: solicitar_servicio.php');
+        } else {
+          echo "error";
+        }
+      }
     }
   }
 }

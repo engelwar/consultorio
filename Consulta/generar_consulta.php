@@ -18,7 +18,7 @@ if (isset($_GET['nombre'])) {
   $apellidoPaciente = $_REQUEST['apellido'];
   $ciPaciente = $_REQUEST['ci'];
 
-  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA, s.DESCRIPCION, drs.DETALLE_RESULTADO_SERVICIO FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_solicitud_servicios dss, servicios s, detalle_resultados_servicios drs WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND pa.CODIGO = ss.CODIGO_PACIENTE AND ss.NUMERO_SOLICITUD = dss.NUMERO_SOLICITUD AND dss.CODIGO_SERVICIO = s.CODIGO_SERVICIO AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO ");
+  $sqlConsulta = ("SELECT DISTINCT r.CODIGO_RESERVA, pa.NOMBRE, pa.APELLIDO, pa.CI, pa.TIPO_SANGRE, pa.ENFERMEDAD_BASE, r.FECHA_RESERVA, GROUP_CONCAT(DISTINCT p.NOMBRE,' ',p.APELLIDO) AS personal, GROUP_CONCAT(DISTINCT t.INICIO,' ',t.FIN) AS turnos, c.DETALLE_CONSULTA, s.DESCRIPCION, drs.DETALLE_RESULTADO_SERVICIO, rm.NUMERO_RECETA FROM personal p, paciente pa, reservas r, turnos t, consulta_medica c, solicitud_servicios ss, detalle_solicitud_servicios dss, servicios s, detalle_resultados_servicios drs, receta_medica rm WHERE pa.NOMBRE = '$nombrePaciente' AND pa.APELLIDO = '$apellidoPaciente' AND pa.CI = $ciPaciente AND pa.CODIGO = r.CODIGO_PACIENTE AND p.CODIGO = r.CODIGO_PERSONAL AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND r.CODIGO_TURNOS = t.CODIGO AND r.CODIGO_RESERVA = c.CODIGO_RESERVA AND pa.CODIGO = ss.CODIGO_PACIENTE AND ss.NUMERO_SOLICITUD = dss.NUMERO_SOLICITUD AND dss.CODIGO_SERVICIO = s.CODIGO_SERVICIO AND ss.NUMERO_SOLICITUD = drs.NUMERO_SOLICITUD_SERVICIO AND c.NUMERO_CONSULTA = rm.CODIGO_CONSULTA ");
 
   $queryConsulta = mysqli_query($con, $sqlConsulta);
 } else {
@@ -131,7 +131,7 @@ if (isset($_GET['nombre'])) {
                             </button>
                           </td>
                           <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['CODIGO_RESERVA']; ?>">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#editChildresn<?php echo $dataConsulta['NUMERO_RECETA']; ?>">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -142,6 +142,7 @@ if (isset($_GET['nombre'])) {
                         </tr>
                         <!--Ventana Modal para Actualizar--->
                         <?php include('ModalGenerarConsulta.php'); ?>
+                        <?php include('ModalReceta.php'); ?>
 
                         <?php } ?>
 

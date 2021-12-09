@@ -27,20 +27,20 @@ $queryEspecial = mysqli_query($con, $sqlEspecial);
         <div class="modal-body" id="cont_modal">
           <div class="form-group">
             <label for="especialidad" class="form-label">Especialidad</label>
-            <select class="form-select" aria-label="Default select example" id="idEspecial">
+            <select class="form-select w-100" aria-label="Default select example" id="idEspecial">
               <?php
               while ($dataEspecial = mysqli_fetch_array($queryEspecial)) {
               ?>
                 <option value="<?php echo $dataEspecial['ESPECIALIDAD']; ?>"><?php echo $dataEspecial['ESPECIALIDAD']; ?></option>
               <?php } ?>
             </select>
-            <button type="button" id="actu" class="btn btn-info" onclick="especial()">Consultar Medicos</button>
+            <button type="button" id="actu" class="btn btn-info w-100" onclick="especial()">Consultar Medicos</button>
           </div>
         </div>
         <div class="modal-body" id="cont_modal">
           <div class="form-group">
-            <label for="medicos" class="form-label">Medicos</label>
-            <select class="form-select" multiple aria-label="multiple select example" name="idMedico" id="idMedico" required>
+            <label for="medicos" class="form-label">Medicos:</label>
+            <select class="form-select w-100" multiple aria-label="multiple select example" name="idMedico" id="idMedico" required>
               
             </select>
           </div>
@@ -49,13 +49,13 @@ $queryEspecial = mysqli_query($con, $sqlEspecial);
           <div class="form-group">
             <label for="fecha" class="form-label">Fecha:</label>
             <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="" required>
-            <button type="button" id="actu" class="btn btn-info" onclick="select()">Consultar Horarios</button>
+            <button type="button" id="actu" class="btn btn-info w-100" onclick="select()">Consultar Horarios</button>
           </div>
         </div>
         <div class="modal-body" id="cont_modal">
           <div class="form-group">
             <label for="horas" class="form-label">Horarios:</label>
-            <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
+            <select class="form-select w-100" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
           </div>
         </div>
 
